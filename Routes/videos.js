@@ -130,7 +130,7 @@ router.get('/trendvideo',verifyToken,async(req,res)=>{
 })
 
 
-router.get('/randomvideo',verifyToken,async(req,res)=>{
+router.get('/randomvideos',async(req,res)=>{
     
     try {
     
@@ -140,6 +140,7 @@ router.get('/randomvideo',verifyToken,async(req,res)=>{
     // aggregate method to display random data
     await closeConnection();
     res.status(200).send(Randomvideos)
+    console.log(Randomvideos);
     } catch (error) {
         res.status(500).send('internal server error')
     }
