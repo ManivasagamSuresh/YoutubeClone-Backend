@@ -121,7 +121,7 @@ router.get('/trendvideo',verifyToken,async(req,res)=>{
     const user =await db.collection("video").find().sort({views : -1}).toArray(); /// if 1 then it will give in ascending order
     
     await closeConnection();
-    res.send("added")
+    res.send(user);
     } catch (error) {
         res.status(500).send('internal server error')
     }
