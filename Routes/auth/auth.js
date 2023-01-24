@@ -38,10 +38,10 @@ router.post('/signin',async(req,res)=>{
         if (compare) {
             const token = await jwt.sign({_id:user._id},JWT_SECRET,{expiresIn:"24h"})
             // console.log(token)
-            res.cookie("accessToken",token,{
-                httpOnly:true
-            }).json(others)
-            // res.json({message:"success"})
+            // res.cookie("accessToken",token,{
+            //     httpOnly:true
+            // }).json(others)
+            res.json({message:"success",others,token})
         } else {
             res.status(404).send("Incorrect Mail/Password")
         }
@@ -62,7 +62,22 @@ router.post('/signin',async(req,res)=>{
 router.post('/signout',async(req,res)=>{
     try {
     await res.clearCookie('accessToken')
+    localStorage.clear()
     res.send("signed Out")
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error)
+    }
+})
+
+
+
+router.get('/users',async(req,res)=>{
+    try {
+    const db =await DBconnect ();  
+    const user =await db.collection("users").findOne({email: req.body.email});
+    await closeConnection();
+    res.status(200).json(user)
     } catch (error) {
         console.log(error)
         res.status(500).send(error)
