@@ -27,15 +27,15 @@ const pusher = new Pusher({
 
 app.use(express.json());
 
-app.use(cors({
-    origin : "http://localhost:3000"
-}))
-
-
-
 // app.use(cors({
-//     origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+//     origin : "http://localhost:3000"
 // }))
+
+
+
+app.use(cors({
+    origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+}))
 
 
 
