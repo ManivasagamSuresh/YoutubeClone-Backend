@@ -181,6 +181,7 @@ router.get('/tags',verifyToken,async(req,res)=>{
     
     const db =await DBconnect ();
     const tags = req.query.tags.split(",");
+    
     const tagvideos =await db.collection("video").find({tags:{$in:tags}}).limit(20).toArray();
     // aggregate method to display random data
     await closeConnection();

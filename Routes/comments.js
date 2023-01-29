@@ -5,7 +5,7 @@ const mongodb = require('mongodb')
 const URL = process.env.db_URL;
 var router = express.Router();
 const {DBconnect,closeConnection} = require("../dbConnect");
-const { verifyToken } = require('../verify');
+const { verifyToken, verifyTokenPut } = require('../verify');
 
 const mongoclient =new mongodb.MongoClient(URL);
 

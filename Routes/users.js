@@ -5,7 +5,7 @@ const mongodb = require('mongodb')
 const URL = process.env.db_URL;
 const router = express.Router();
 const {DBconnect,closeConnection} = require("../dbConnect")
-const {verifyToken}=require("../verify")
+const {verifyToken, verifyTokenPut}=require("../verify")
 
 const mongoclient =new mongodb.MongoClient(URL);
 
@@ -69,7 +69,7 @@ router.get('/findUser/:id',async(req,res)=>{
 
 
 
-router.put('/sub/:id',verifyToken,async(req,res)=>{
+router.put('/sub/:id',verifyTokenPut,async(req,res)=>{
     
     try {
     const db =await DBconnect ();
@@ -86,7 +86,7 @@ router.put('/sub/:id',verifyToken,async(req,res)=>{
 
 })
 
-router.put('/unsub/:id',verifyToken,async(req,res)=>{
+router.put('/unsub/:id',verifyTokenPut,async(req,res)=>{
     
         try {
         const db =await DBconnect ();
@@ -103,12 +103,14 @@ router.put('/unsub/:id',verifyToken,async(req,res)=>{
     
 })
 
-router.put('/like/:videoId',verifyToken,async(req,res)=>{
+router.put('/like/:videoId',verifyTokenPut,async(req,res)=>{
     try {
-        const id = req.user._id;
+        // console.log(req.body);
+        const id = mongodb.ObjectId(req.user._id);
+        // const id = mongodb.ObjectId(req.body)
         // const videoId = req.params.id;
     const db =await DBconnect ();   
-    const subs =await db.collection("video").updateOne({_id:mongodb.ObjectId(req.params.videoId)},{
+    const like =await db.collection("video").updateOne({_id:mongodb.ObjectId(req.params.videoId)},{
         $addToSet:{likes : id}, //make sure the id does not duplicates in array
         $pull :{dislikes : id}  
     });
@@ -121,9 +123,9 @@ router.put('/like/:videoId',verifyToken,async(req,res)=>{
     }
 })
 
-router.put('/dislike/:videoId',verifyToken,async(req,res)=>{
+router.put('/dislike/:videoId',verifyTokenPut,async(req,res)=>{
     try {
-        const id = req.user._id;
+        const id = mongodb.ObjectId(req.user._id);
         // const videoId = req.params.id;
     const db =await DBconnect ();   
     const subs =await db.collection("video").updateOne({_id:mongodb.ObjectId(req.params.videoId)},{
