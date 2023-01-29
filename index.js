@@ -27,15 +27,15 @@ const pusher = new Pusher({
 
 app.use(express.json());
 
-// app.use(cors({
-//     origin : "http://localhost:3000"
-// }))
-
-
-
 app.use(cors({
-    origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+    origin : "http://localhost:3000"
 }))
+
+
+
+// app.use(cors({
+//     origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+// }))
 
 
 
@@ -70,6 +70,6 @@ app.use('/api',comments);
 
 
 
-app.listen(5000,()=>{
+app.listen(process.env.PORT || 5000,()=>{
     console.log("connected")
 })
