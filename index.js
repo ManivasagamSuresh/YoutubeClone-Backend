@@ -44,12 +44,21 @@ app.use(cors({
 // }))
 
 
+// const io = new Server(server,{
+//   cors : {
+//     origin : "http://localhost:3000",
+//     methods : ['GET','POST']
+//   }
+// })
+
+
 const io = new Server(server,{
   cors : {
-    origin : "http://localhost:3000",
+    origin : "https://jocular-vacherin-dcbf9f.netlify.app",
     methods : ['GET','POST']
   }
 })
+
 
 io.on('connection',(socket)=>{
   console.log('user connected',socket.id);
