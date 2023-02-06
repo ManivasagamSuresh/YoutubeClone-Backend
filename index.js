@@ -10,7 +10,7 @@ const comments = require('./Routes/comments')
 const auth = require('./Routes/auth/auth')
 const  cookieParser =require('cookie-parser')
 // const mongoclient = mongodb.MongoClient(URL);
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const http = require('http');
 const {Server} = require('socket.io');
 
@@ -34,14 +34,14 @@ const server = http.createServer(app);
 
 app.use(express.json());
 
-app.use(cors({
-    origin : "http://localhost:3000"
-}))
-
-
 // app.use(cors({
-//     origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+//     origin : "http://localhost:3000"
 // }))
+
+
+app.use(cors({
+    origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+}))
 
 
 // const io = new Server(server,{
