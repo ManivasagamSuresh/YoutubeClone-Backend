@@ -5,7 +5,7 @@ const mongodb = require('mongodb')
 const URL = process.env.db_URL;
 var router = express.Router();
 const {DBconnect,closeConnection} = require("../dbConnect");
-const { verifyToken } = require('../verify');
+const { verifyToken, verifyTokenPut } = require('../verify');
 
 const mongoclient =new mongodb.MongoClient(URL);
 
@@ -15,8 +15,8 @@ router.post('/addvideo',verifyToken,async(req,res)=>{
     
     const db =await DBconnect ();
     req.body.timestamps = new Date();
-    req.body.views = 0
-    req.body.tags = [];
+    req.body.views = [];
+    
     req.body.likes = [];
     req.body.dislikes = [];
     
@@ -95,7 +95,7 @@ router.get('/findvideo/:id',verifyToken,async(req,res)=>{
 
 })
 
-router.put('/videoViews/:id',verifyToken,async(req,res)=>{
+router.put('/videoViews/:id',verifyTokenPut,async(req,res)=>{
     
     try {
     
@@ -140,7 +140,7 @@ router.get('/randomvideos',async(req,res)=>{
     // aggregate method to display random data
     await closeConnection();
     res.status(200).send(Randomvideos)
-    console.log(Randomvideos);
+    // console.log(Randomvideos);
     } catch (error) {
         res.status(500).send('internal server error')
     }
@@ -189,7 +189,7 @@ router.get('/tags',verifyToken,async(req,res)=>{
     } catch (error) {
         res.status(500).send('internal server error')
     }
-
+ 
 
 })
 
@@ -199,11 +199,11 @@ router.get('/search',verifyToken,async(req,res)=>{
     
     const db =await DBconnect ();
     
-    const Randomvideos =await db.collection("video").find({title:{$regex:query, $options : "i"}
+    const searchvideos =await db.collection("video").find({title:{$regex:query, $options : "i"}
                                                     }).limit(40).toArray();
     // aggregate method to display random data
     await closeConnection();
-    res.status(200).send(Randomvideos)
+    res.status(200).send(searchvideos)
     } catch (error) {
         res.status(500).send('internal server error')
     }

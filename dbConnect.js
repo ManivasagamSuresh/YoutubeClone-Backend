@@ -22,8 +22,6 @@ async function DBconnect (){
 const closeConnection=async ()=>{
     if(connection){
         await connection.close();
-    }else{
-        console.log("No Connection")
     }
 }
 
