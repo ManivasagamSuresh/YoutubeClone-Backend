@@ -19,29 +19,29 @@ const server = http.createServer(app);
 
 app.use(express.json());
 
-// app.use(cors({
-//     origin : "http://localhost:3000"
-// }))
-
-
-// const io = new Server(server,{
-//   cors : {
-//     origin : "http://localhost:3000",
-//     methods : ['GET','POST']
-//   }
-// })
-
 app.use(cors({
-  origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+    origin : "http://localhost:3000"
 }))
 
 
 const io = new Server(server,{
   cors : {
-    origin : "https://jocular-vacherin-dcbf9f.netlify.app",
+    origin : "http://localhost:3000",
     methods : ['GET','POST']
   }
 })
+
+// app.use(cors({
+//   origin : "https://jocular-vacherin-dcbf9f.netlify.app"
+// }))
+
+
+// const io = new Server(server,{
+//   cors : {
+//     origin : "https://jocular-vacherin-dcbf9f.netlify.app",
+//     methods : ['GET','POST']
+//   }
+// })
 
 
 io.on('connection',(socket)=>{

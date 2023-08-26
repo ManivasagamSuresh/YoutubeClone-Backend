@@ -6,6 +6,7 @@ const router = express.Router();
 const {DBconnect,closeConnection} = require("../../dbConnect")
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
+const { verifyToken } = require('../../verify');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const mongoclient =new mongodb.MongoClient(URL);
@@ -36,7 +37,7 @@ router.post('/signin',async(req,res)=>{
     if(user){
         const compare = await bcrypt.compare(req.body.password , user.password);
         if (compare) {
-            const token = await jwt.sign({_id:user._id},JWT_SECRET,{expiresIn:"24h"})
+            const token = await jwt.sign({_id:user._id},JWT_SECRET)
             // console.log(token)
             // res.cookie("accessToken",token,{
             //     httpOnly:true
@@ -83,6 +84,17 @@ router.get('/users',async(req,res)=>{
         res.status(500).send(error)
     }
 })
+
+router.get('/verifylogin',verifyToken,async(req,res)=>{
+    try {
+    
+    res.status(200).json("Verified")
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error)
+    }
+})
+
 
 
 module.exports = router 

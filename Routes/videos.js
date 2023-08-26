@@ -15,7 +15,7 @@ router.post('/addvideo',verifyToken,async(req,res)=>{
     
     const db =await DBconnect ();
     req.body.timestamps = new Date();
-    req.body.views = [];
+    req.body.views = 0;
     
     req.body.likes = [];
     req.body.dislikes = [];
@@ -98,13 +98,13 @@ router.get('/findvideo/:id',verifyToken,async(req,res)=>{
 router.put('/videoViews/:id',verifyTokenPut,async(req,res)=>{
     
     try {
-    
+    console.log(req)
     const db =await DBconnect ();
         
     const views =await db.collection("video").updateOne({_id: mongodb.ObjectId(req.params.id)},{$inc:{views : 1}});
     
     await closeConnection();
-    res.send("views has been increased")
+    res.send("views has been increased")    
     } catch (error) {
         res.status(500).send('internal server error')
     }

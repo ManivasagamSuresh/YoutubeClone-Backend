@@ -6,7 +6,7 @@ const verifyToken = (req,res,next)=>{
     if(token){
         const verify = jwt.verify(token,process.env.JWT_SECRET,(err,user)=>{
             if(err){
-                res.status(401).send('UnAuthorized err');
+                res.status(401).send('NotValid');
                 console.log("UnAuthorized err")
             }
             req.user = user;  /////////used is various places..
@@ -22,7 +22,7 @@ const verifyToken = (req,res,next)=>{
 
 const verifyTokenPut = (req,res,next)=>{
     const token = req.body.headers.authorization
-    // console.log(req.headers);
+    console.log(req.body.headers.authorization);
     if(token){
         const verify = jwt.verify(token,process.env.JWT_SECRET,(err,user)=>{
             if(err){
@@ -30,6 +30,7 @@ const verifyTokenPut = (req,res,next)=>{
                 console.log("UnAuthorized err")
             }
             req.user = user;  /////////used is various places..
+            console.log(user)
             next();
         })
         
