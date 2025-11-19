@@ -45,13 +45,13 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin : "https://cheerful-valkyrie-754245.netlify.app"
+  origin : "https://videotubeproject.netlify.app"
 }))
 
 
 const io = new Server(server,{
   cors : {
-    origin : "https://cheerful-valkyrie-754245.netlify.app",
+    origin : "https://videotubeproject.netlify.app",
     methods : ['GET','POST']
   }
 })
