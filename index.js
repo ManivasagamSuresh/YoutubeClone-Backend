@@ -45,16 +45,24 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin : "https://videotubeproject.netlify.app"
-}))
+  origin: [
+    "https://videotubeproject.netlify.app",
+    "http://localhost:3000"
+  ],
+}));
 
 
-const io = new Server(server,{
-  cors : {
-    origin : "https://videotubeproject.netlify.app",
-    methods : ['GET','POST']
+
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "https://videotubeproject.netlify.app",
+      "http://localhost:3000"
+    ],
+    methods: ["GET", "POST"]
   }
-})
+});
+
 
 
 
